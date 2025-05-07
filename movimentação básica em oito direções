@@ -1,0 +1,20 @@
+extends CharacterBody2D
+
+@export var velocidade = 400
+@export var aceleracao = 800
+
+
+
+func get_input() -> Vector2:
+	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	#get_input() retorna a direção do movimento baseado nas teclas.
+
+func _physics_process(delta):
+	var input_direcao = get_input()
+	var target_velocidade = input_direcao * velocidade
+	#target_velocity é a velocidade ideal baseada na entrada do jogador.
+	velocity = velocity.move_toward(target_velocidade, aceleracao * delta)
+	#velocity.move_toward() suaviza a velocidade atual em direção à desejada com base na aceleração.
+	
+	#Isso cria um efeito de aceleração/desaceleração natural.
+	move_and_slide()
